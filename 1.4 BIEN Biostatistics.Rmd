@@ -18,33 +18,33 @@ library(sp) # A package for spatial data
 
 ```{r}
 # Download the data for a focal species.
-Artocarpus_altilis <- BIEN_occurrence_species(species = "Artocarpus altilis")
+Solanum_pimpinellifolium <- BIEN_occurrence_species(species = "Solanum pimpinellifolium")
 ```
 
-It looks like nothing happened, but you actually have created a data frame called Artocarpus_altilis, full of character data and numeric data. Use the commands below. The first allows you to view the so called meta-data (data about the data; how many observations, for example). The second command looks at the first six entries in the data frame. The third looks at the last six entries in the data frame.
+It looks like nothing happened, but you actually have created a data frame called Solanum_pimpinellifolium, full of character data and numeric data. Use the commands below. The first allows you to view the so called meta-data (data about the data; how many observations, for example). The second command looks at the first six entries in the data frame. The third looks at the last six entries in the data frame.
 
 ```{r}
-str(Artocarpus_altilis)
-head(Artocarpus_altilis)
-tail(Artocarpus_altilis)
+str(Solanum_pimpinellifolium)
+head(Solanum_pimpinellifolium)
+tail(Solanum_pimpinellifolium)
 ```
 
 As you know from looking at the browser, you can look up a rangemap. 
 ```{r}
-breadfruit_rangemap <- BIEN_ranges_load_species("Artocarpus altilis")
+tomato_rangemap <- BIEN_ranges_load_species("Solanum pimpinellifolium")
 ```
 
 ```{r}
-# Map the range of breadfruit
+# Map the range of tomato
 map('world', fill=T, col="grey", bg = "light blue", xlim=c(-180,20),ylim=c(-60,80))
-plot(breadfruit_rangemap, col="green", add=T)
+plot(tomato_rangemap, col="green", add=T)
 ```
 
 ```{r}
-# Map the range of breadfruit + occurence records
+# Map the range of tomato + occurence records
 map('world', fill=T, col="grey", bg="light blue", xlim=c(-180,-20), ylim=c(-60, 80))
-plot(breadfruit_rangemap, col="green", add=T)
-points(cbind(Artocarpus_altilis$longitude, Artocarpus_altilis$latitude), col="blue", pch=20, cex=1)
+plot(tomato_rangemap, col="green", add=T)
+points(cbind(Solanum_pimpinellifolium$longitude, Solanum_pimpinellifolium$latitude), col="blue", pch=20, cex=1)
 ```
 
 By default, RBIEN commands for species occurrence only downloads limited information, but those defaults can be changed to get more expansive data, including:
@@ -54,9 +54,9 @@ By default, RBIEN commands for species occurrence only downloads limited informa
 - when occurrence happened, country of occurrence, etc.
 
 ```{r}
-Artocarpus_altilis_full <- BIEN_occurrence_species(species = "Artocarpus altilis",cultivated = T,only.new.world = F,all.taxonomy = T,native.status = T,observation.type = T,political.boundaries = T)
+Solanum_pimpinellifolium_full <- BIEN_occurrence_species(species = "Solanum pimpinellifolium",cultivated = T,only.new.world = F,all.taxonomy = T,native.status = T,observation.type = T,political.boundaries = T)
 
-str(Artocarpus_altilis_full)
+str(Solanum_pimpinellifolium_full)
 ```
 
 This was a slightly slower process because so much more data were obtained. 
@@ -67,10 +67,10 @@ Now let's map again, but on the world map instead of just the Americas. And let'
 map('world', fill=T , col="grey", bg="light blue")
 
 #Plot the points from the full query in red
-points(cbind(Artocarpus_altilis_full$longitude, Artocarpus_altilis_full$latitude), col="red", pch=20, cex=1)
+points(cbind(Solanum_pimpinellifolium_full$longitude, Solanum_pimpinellifolium_full$latitude), col="red", pch=20, cex=1)
 
 # Plot the points from the default query in blue
-points(cbind(Artocarpus_altilis$longitude, Artocarpus_altilis$latitude), col="blue", pch=20, cex=1) 
+points(cbind(Solanum_pimpinellifolium$longitude, Solanum_pimpinellifolium$latitude), col="blue", pch=20, cex=1) 
 ```
 
 ### Trait Data and linking this to Biostatistics
@@ -80,32 +80,32 @@ BIEN_trait_list()
 ```
 
 ```{r}
-# Create data frame of breadfruit traits
-breadfruit_traits <- BIEN_trait_genus(genus = "Artocarpus")
-str(breadfruit_traits)
-breadfruit_traits
+# Create data frame of tomato traits
+tomato_traits <- BIEN_trait_genus(genus = "Solanum")
+str(tomato_traits)
+tomato_traits
 ```
 
 ```{r}
-Breadfruit_DBH <- BIEN_trait_traitbygenus(trait = "diameter at breast height (1.3 m)", genus = "Artocarpus")
-head(Breadfruit_DBH)
-tail(Breadfruit_DBH)
-str(Breadfruit_DBH)
+Tomato_DBH <- BIEN_trait_traitbygenus(trait = "diameter at breast height (1.3 m)", genus = "Solanum")
+head(Tomato_DBH)
+tail(Tomato_DBH)
+str(Tomato_DBH)
 ```
 
 ```{r}
-# List variable names from Breadfruit_DBH data frame
-names(Breadfruit_DBH)
+# List variable names from Tomato_DBH data frame
+names(Tomato_DBH)
 ```
 
 ```{r}
-Breadfruit_DBH_small = Breadfruit_DBH[c(1:5)]
-Breadfruit_DBH_small
-Breadfruit_DBH_small = as.data.frame(Breadfruit_DBH_small)
-class(Breadfruit_DBH_small)
-head(Breadfruit_DBH_small)
-class(Breadfruit_DBH_small$trait_value)
-DBH = as.numeric(Breadfruit_DBH_small$trait_value)
+Tomato_DBH_small = Tomato_DBH[c(1:5)]
+Tomato_DBH_small
+Tomato_DBH_small = as.data.frame(Tomato_DBH_small)
+class(Tomato_DBH_small)
+head(Tomato_DBH_small)
+class(Tomato_DBH_small$trait_value)
+DBH = as.numeric(Tomato_DBH_small$trait_value)
 class(DBH)
 ```
 
@@ -113,64 +113,64 @@ Note that a library is being loaded below, and without it the boxplots will not 
 
 ```{r}
 library(lattice)
-head(Breadfruit_DBH_small)
-boxplot(DBH~scrubbed_species_binomial, data=Breadfruit_DBH_small)
+head(Tomato_DBH_small)
+boxplot(DBH~scrubbed_species_binomial, data=Tomato_DBH_small)
 ```
   	
 ```{r}
-Breadfruit_WPH <- BIEN_trait_traitbygenus(trait = "whole plant height", genus = "Artocarpus")
-str(Breadfruit_WPH)
-Breadfruit_WPH
+Tomato_WPH <- BIEN_trait_traitbygenus(trait = "whole plant height", genus = "Solanum")
+str(Tomato_WPH)
+Tomato_WPH
 ```
 
 ```{r}
-names(Breadfruit_WPH)
+names(Tomato_WPH)
 ```
 
 ```{r}
-Breadfruit_WPH_small = Breadfruit_WPH[c(1:5)]
-Breadfruit_WPH_small
-Breadfruit_WPH_small = as.data.frame(Breadfruit_WPH_small)
-class(Breadfruit_WPH_small)
-head(Breadfruit_WPH_small)
-class(Breadfruit_WPH_small$trait_value)
-WPH = as.numeric(Breadfruit_WPH_small$trait_value)
+Tomato_WPH_small = Tomato_WPH[c(1:5)]
+Tomato_WPH_small
+Tomato_WPH_small = as.data.frame(Tomato_WPH_small)
+class(Tomato_WPH_small)
+head(Tomato_WPH_small)
+class(Tomato_WPH_small$trait_value)
+WPH = as.numeric(Tomato_WPH_small$trait_value)
 class(WPH)
 ```
 
 
 
 ```{r}
-mean(DBH, data=Breadfruit_DBH_small)
-mean(WPH, data=Breadfruit_WPH_small)
+mean(DBH, data=Tomato_DBH_small)
+mean(WPH, data=Tomato_WPH_small)
 ```
 
 
 Downloading for just one species: 
 
 ```{r}
-Anitidus_DBH <- BIEN_trait_traitbyspecies(trait = "diameter at breast height (1.3 m)", species = "Artocarpus nitidus")
-head(Anitidus_DBH)
-tail(Anitidus_DBH)
-str(Anitidus_DBH)
+Prunicana_DBH <- BIEN_trait_traitbyspecies(trait = "diameter at breast height (1.3 m)", species = "Prunus africana")
+head(Prunicana_DBH)
+tail(Prunicana_DBH)
+str(Prunicana_DBH)
 ```
 
 
 ```{r}
-Anitidus_DBH_small = Anitidus_DBH[c(1:5)]
-Anitidus_DBH_small
-Anitidus_DBH_small = as.data.frame(Anitidus_DBH_small)
-class(Anitidus_DBH_small)
-head(Anitidus_DBH_small)
-class(Anitidus_DBH_small$trait_value)
-DBHa = as.numeric(Anitidus_DBH_small$trait_value)
+Prunicana_DBH_small = Prunicana_DBH[c(1:5)]
+Prunicana_DBH_small
+Prunicana_DBH_small = as.data.frame(Prunicana_DBH_small)
+class(Prunicana_DBH_small)
+head(Prunicana_DBH_small)
+class(Prunicana_DBH_small$trait_value)
+DBHa = as.numeric(Prunicana_DBH_small$trait_value)
 class(DBHa)
 ```
 
 
 ```{r}
-boxplot(DBHn)
-hist(DBHn)
+boxplot(DBH)
+hist(DBH)
 ```
 
 
@@ -178,33 +178,33 @@ Another species:
 
 
 ```{r}
-Ahirsutus_DBH <- BIEN_trait_traitbyspecies(trait = "diameter at breast height (1.3 m)", species = "Artocarpus hirsutus")
-head(Ahirsutus_DBH)
-tail(Ahirsutus_DBH)
-str(Ahirsutus_DBH)
+Samericanum_DBH <- BIEN_trait_traitbyspecies(trait = "diameter at breast height (1.3 m)", species = "Solanum americanum")
+head(Samericanum_DBH)
+tail(Samericanum_DBH)
+str(Samericanum_DBH)
 ```
 
 
 ```{r}
-Ahirsutus_DBH_small = Ahirsutus_DBH[c(1:5)]
-Ahirsutus_DBH_small
-Ahirsutus_DBH_small = as.data.frame(Ahirsutus_DBH_small)
-class(Ahirsutus_DBH_small)
-head(Ahirsutus_DBH_small)
-DBHh = as.numeric(Ahirsutus_DBH_small$trait_value)
-class(Ahirsutus_DBH_small$trait_value)
+Parmeniaca_DBH_small = Parmeniaca_DBH[c(1:5)]
+Parmeniaca_DBH_small
+Parmeniaca_DBH_small = as.data.frame(Parmeniaca_DBH_small)
+class(Parmeniaca_DBH_small)
+head(Parmeniaca_DBH_small)
+DBHh = as.numeric(Parmeniaca_DBH_small$trait_value)
+class(Parmeniaca_DBH_small$trait_value)
 class(DBHh)
 ```
 
 
 
 ```{r}
-library(dplyr)
-Artocarpus2<-rbind(Anitidus_DBH_small, Ahirsutus_DBH_small)
-head(Artocarpus2)
-tail(Artocarpus2)
-class(Artocarpus2$trait_value)
-DBHboth = as.numeric(Artocarpus2$trait_value)
+library(lattice)
+Solanum2<-rbind(Parmeniaca_DBH_small, Parmeniaca_DBH_small)
+head(Solanum2)
+tail(Solanum2)
+class(Solanum2$trait_value)
+DBHboth = as.numeric(Solanum2$trait_value)
 class(DBHboth)
 ```
 
@@ -214,15 +214,15 @@ hist(DBHboth)
 ```
 
 ```{r}
-ArtocarpusBoth<-cbind(Artocarpus2, DBHboth)
-head(ArtocarpusBoth)
-tail(ArtocarpusBoth)
+SolanumBoth<-cbind(Solanum2, DBHboth)
+head(SolanumBoth)
+tail(SolanumBoth)
 ```
 
 
 
 ```{r}
-boxplot(DBHboth~scrubbed_species_binomial, data=ArtocarpusBoth)
+boxplot(DBHboth~scrubbed_species_binomial, data=SolanumBoth)
 ```
 
 
@@ -233,16 +233,16 @@ https://www.statmethods.net/stats/descriptives.html
 ```{r}
 install.packages("doBy")
 library(doBy)
-summaryBy(DBH~scrubbed_species_binomial, data=Breadfruit_DBH_small, FUN=c(mean, sd))
-summaryBy(WPH~scrubbed_species_binomial, data=Breadfruit_WPH_small, FUN=c(mean, sd))
+summaryBy(DBH~scrubbed_species_binomial, data=Tomato_DBH_small, FUN=c(mean, sd))
+summaryBy(WPH~scrubbed_species_binomial, data=Tomato_WPH_small, FUN=c(mean, sd))
 ```
 
 ```{r}
-(unique(Breadfruit_DBH_small$scrubbed_species_binomial))
+(unique(Tomato_DBH_small$scrubbed_species_binomial))
 ```
 
 ```{r}
-(unique(Breadfruit_WPH_small$scrubbed_species_binomial))
+(unique(Tomato_WPH_small$scrubbed_species_binomial))
 ```
 
 ## Exercises for completing the portfolio 
@@ -273,7 +273,7 @@ choose two species in the genus Agave (used for fiber, tequila; see Wikipedia)
 ```{r}
 # Population Mean Between Two Independent Samples
 # http://www.r-tutor.com/elementary-statistics/inference-about-two-populations/population-mean-between-two-independent-samples
-ttest_result1 = t.test(x=Breadfruit_WPH_small$scrubbed_species_binomial, y=Breadfruit_WPH_small$trait_value, paired=FALSE, alternative="two.sided")
+ttest_result1 = t.test(x=Tomato_WPH_small$scrubbed_species_binomial, y=Tomato_WPH_small$trait_value, paired=FALSE, alternative="two.sided")
 ttest_result1
 ```
 
